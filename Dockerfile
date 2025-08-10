@@ -17,7 +17,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Expose app ports
-EXPOSE 3000 6000
+EXPOSE 3000 5000
 
 # Start the app (unbuffered logs due to PYTHONUNBUFFERED=1)
 CMD ["python", "main.py"]
