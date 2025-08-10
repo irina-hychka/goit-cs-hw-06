@@ -1,0 +1,30 @@
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000" # HTTP
+    environment:
+      MONGO_URI: mongodb://root:example@mongo:27017/?authSource=admin
+      MONGO_DB: messages_db
+      MONGO_COLL: messages
+    depends_on:
+      - mongo
+    restart: unless-stopped
+    volumes:
+      - ./templates:/app/templates:ro
+      - ./static:/app/static:ro
+
+  mongo:
+    image: mongo:6
+    command: ["--auth"]
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    restart: unless-stopped
+
+volumes:
+  mongo-data:
